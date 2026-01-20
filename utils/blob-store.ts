@@ -1,9 +1,7 @@
 import { put, list, del, head } from '@vercel/blob';
 
-// Token do Blob Storage (configurado via variável de ambiente)
-const getToken = () => {
-  return process.env.BLOB_READ_WRITE_TOKEN || '';
-};
+// O token é automaticamente detectado pelo SDK do Vercel Blob
+// via a variável de ambiente BLOB_READ_WRITE_TOKEN
 
 const BLOB_STORE_NAME = 'gift-list-store';
 
@@ -15,13 +13,9 @@ function getKey(prefix: string, id: string | number): string {
 // Gifts
 export async function getAllGifts(): Promise<any[]> {
   try {
-    const token = getToken();
-    if (!token) throw new Error('BLOB_READ_WRITE_TOKEN not configured');
-
     const { blobs } = await list({ 
       prefix: 'gifts/',
-      limit: 1000,
-      token
+      limit: 1000
     });
     
     const gifts = await Promise.all(
@@ -42,11 +36,8 @@ export async function getAllGifts(): Promise<any[]> {
 
 export async function getGiftById(id: number): Promise<any | null> {
   try {
-    const token = getToken();
-    if (!token) throw new Error('BLOB_READ_WRITE_TOKEN not configured');
-
     const key = getKey('gifts', id);
-    const result = await head(key, { token });
+    const result = await head(key);
     
     if (!result) return null;
     
@@ -72,15 +63,11 @@ export async function createGift(gift: any): Promise<any> {
     purchasedByUserId: null
   };
 
-  const token = getToken();
-  if (!token) throw new Error('BLOB_READ_WRITE_TOKEN not configured');
-
   const key = getKey('gifts', newId);
   await put(key, JSON.stringify(newGift), {
     access: 'public',
     addRandomSuffix: false,
-    contentType: 'application/json',
-    token
+    contentType: 'application/json'
   });
 
   return newGift;
@@ -90,17 +77,13 @@ export async function updateGift(id: number, updates: Partial<any>): Promise<any
   const existing = await getGiftById(id);
   if (!existing) return null;
 
-  const token = getToken();
-  if (!token) throw new Error('BLOB_READ_WRITE_TOKEN not configured');
-
   const updated = { ...existing, ...updates };
   const key = getKey('gifts', id);
   
   await put(key, JSON.stringify(updated), {
     access: 'public',
     addRandomSuffix: false,
-    contentType: 'application/json',
-    token
+    contentType: 'application/json'
   });
 
   return updated;
@@ -108,11 +91,8 @@ export async function updateGift(id: number, updates: Partial<any>): Promise<any
 
 export async function deleteGift(id: number): Promise<boolean> {
   try {
-    const token = getToken();
-    if (!token) throw new Error('BLOB_READ_WRITE_TOKEN not configured');
-
     const key = getKey('gifts', id);
-    await del(key, { token });
+    await del(key);
     return true;
   } catch (error) {
     console.error('Error deleting gift:', error);
@@ -123,13 +103,9 @@ export async function deleteGift(id: number): Promise<boolean> {
 // Users
 export async function getAllUsers(): Promise<any[]> {
   try {
-    const token = getToken();
-    if (!token) throw new Error('BLOB_READ_WRITE_TOKEN not configured');
-
     const { blobs } = await list({ 
       prefix: 'users/',
-      limit: 1000,
-      token
+      limit: 1000
     });
     
     const users = await Promise.all(
@@ -148,11 +124,8 @@ export async function getAllUsers(): Promise<any[]> {
 
 export async function getUserById(id: number): Promise<any | null> {
   try {
-    const token = getToken();
-    if (!token) throw new Error('BLOB_READ_WRITE_TOKEN not configured');
-
     const key = getKey('users', id);
-    const result = await head(key, { token });
+    const result = await head(key);
     
     if (!result) return null;
     
@@ -182,15 +155,11 @@ export async function createUser(user: any): Promise<any> {
     role: user.role || 0 // SimpleUser por padrão
   };
 
-  const token = getToken();
-  if (!token) throw new Error('BLOB_READ_WRITE_TOKEN not configured');
-
   const key = getKey('users', newId);
   await put(key, JSON.stringify(newUser), {
     access: 'public',
     addRandomSuffix: false,
-    contentType: 'application/json',
-    token
+    contentType: 'application/json'
   });
 
   return newUser;
@@ -199,11 +168,8 @@ export async function createUser(user: any): Promise<any> {
 // Index para phoneNumber (para busca rápida)
 export async function getUserIdByPhoneNumber(phoneNumber: string): Promise<number | null> {
   try {
-    const token = getToken();
-    if (!token) throw new Error('BLOB_READ_WRITE_TOKEN not configured');
-
     const key = `index/phone/${phoneNumber}.json`;
-    const result = await head(key, { token });
+    const result = await head(key);
     
     if (!result) return null;
     
@@ -218,14 +184,10 @@ export async function getUserIdByPhoneNumber(phoneNumber: string): Promise<numbe
 }
 
 export async function createPhoneIndex(phoneNumber: string, userId: number): Promise<void> {
-  const token = getToken();
-  if (!token) throw new Error('BLOB_READ_WRITE_TOKEN not configured');
-
   const key = `index/phone/${phoneNumber}.json`;
   await put(key, JSON.stringify({ userId }), {
     access: 'public',
     addRandomSuffix: false,
-    contentType: 'application/json',
-    token
+    contentType: 'application/json'
   });
 }

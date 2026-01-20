@@ -22,15 +22,23 @@ Backend API para o Gift List App usando Next.js API Routes e Vercel Blob Storage
    npm install
    ```
 
-2. **Configurar variável de ambiente:**
-   - Crie um arquivo `.env.local`
-   - Adicione: `BLOB_READ_WRITE_TOKEN=seu_token_vercel`
-
-   Para obter o token:
+2. **Conectar ao Blob Store na Vercel:**
    - Acesse: https://vercel.com/dashboard
-   - Vá em Settings > Storage > Create Store
+   - Vá em Storage > Create Store (se ainda não criou)
    - Crie um Blob Store
-   - Copie o token
+   - Conecte o projeto ao Blob Store (isso injeta automaticamente `BLOB_READ_WRITE_TOKEN`)
+
+3. **Configurar localmente:**
+   ```bash
+   # Instalar Vercel CLI (se ainda não tem)
+   npm i -g vercel
+   
+   # Conectar projeto local ao projeto Vercel
+   vercel link
+   
+   # Baixar variáveis de ambiente
+   vercel env pull .env.local
+   ```
 
 3. **Executar em desenvolvimento:**
    ```bash
@@ -62,16 +70,13 @@ Backend API para o Gift List App usando Next.js API Routes e Vercel Blob Storage
    - Conecte seu repositório GitHub
    - Selecione a pasta `gift-list-backend`
 
-2. **Configurar variáveis de ambiente:**
-   - No dashboard da Vercel, vá em Settings > Environment Variables
-   - Adicione: `BLOB_READ_WRITE_TOKEN` com o token do Blob Store
+2. **Criar e conectar Blob Store:**
+   - No dashboard da Vercel, vá em Storage
+   - Clique em "Create Store" e crie um Blob Store
+   - **IMPORTANTE:** Conecte o projeto ao Blob Store
+   - Isso injeta automaticamente a variável `BLOB_READ_WRITE_TOKEN`
 
-3. **Criar Blob Store:**
-   - Vá em Storage > Create Store
-   - Crie um novo Blob Store
-   - Copie o token e adicione nas variáveis de ambiente
-
-4. **Deploy automático:**
+3. **Deploy automático:**
    - A Vercel fará deploy automaticamente
    - Sua API estará em: `https://seu-projeto.vercel.app/api`
 
@@ -97,8 +102,8 @@ export const environment = {
 ## 🆘 Troubleshooting
 
 ### Erro: "BLOB_READ_WRITE_TOKEN is not defined"
-- Configure a variável de ambiente no Vercel
-- Ou adicione no `.env.local` para desenvolvimento
+- **Conecte o projeto ao Blob Store** na Vercel (isso injeta automaticamente o token)
+- Para desenvolvimento local: execute `vercel env pull .env.local`
 
 ### Erro de CORS
 - Configure `AllowedOrigins` no frontend Angular
