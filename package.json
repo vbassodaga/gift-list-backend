@@ -17,14 +17,14 @@
     "@types/react-dom": "^18.2.0",
     "@vercel/blob": "^0.14.1",
     "bcryptjs": "^2.4.3",
-    "mssql": "^10.0.1",
-    "dotenv": "^16.3.1",
     "next": "^14.0.0",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
     "eslint": "^8.0.0",
     "eslint-config-next": "^14.0.0",
-    "tsx": "^4.6.0"
+    "tsx": "^4.6.0",
+    "mssql": "^10.0.1",
+    "dotenv": "^16.3.1"
   }
 }
