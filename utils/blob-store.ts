@@ -1,7 +1,19 @@
 import { put, list, del, head } from '@vercel/blob';
 
-// O token é automaticamente detectado pelo SDK do Vercel Blob
-// via a variável de ambiente BLOB_READ_WRITE_TOKEN
+// O SDK do Vercel Blob procura por BLOB_READ_WRITE_TOKEN
+// Se o token tem outro nome (ex: giftList_READ_WRITE_TOKEN), vamos configurar automaticamente
+const ensureBlobToken = () => {
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    // Tentar encontrar qualquer variável que termine com _READ_WRITE_TOKEN
+    const tokenKey = Object.keys(process.env).find(key => key.endsWith('_READ_WRITE_TOKEN'));
+    if (tokenKey) {
+      process.env.BLOB_READ_WRITE_TOKEN = process.env[tokenKey]!;
+    }
+  }
+};
+
+// Garantir que o token está configurado antes de usar
+ensureBlobToken();
 
 const BLOB_STORE_NAME = 'gift-list-store';
 
