@@ -17,6 +17,7 @@ export async function GET() {
       name: gift.name,
       description: gift.description,
       imageUrl: gift.imageUrl,
+      averagePrice: gift.averagePrice || undefined,
       isPurchased: gift.isPurchased,
       purchasedByUserId: gift.purchasedByUserId || null,
       purchasedBy: gift.purchasedByUserId 
@@ -69,6 +70,7 @@ export async function POST(request: NextRequest) {
       name: body.name,
       description: body.description || '',
       imageUrl: body.imageUrl,
+      averagePrice: body.averagePrice || undefined,
       isPurchased: false,
       purchasedByUserId: null
     });
@@ -78,6 +80,7 @@ export async function POST(request: NextRequest) {
       name: gift.name,
       description: gift.description,
       imageUrl: gift.imageUrl,
+      averagePrice: gift.averagePrice || undefined,
       isPurchased: gift.isPurchased,
       purchasedByUserId: null,
       purchasedBy: null,

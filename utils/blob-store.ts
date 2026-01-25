@@ -203,3 +203,19 @@ export async function createPhoneIndex(phoneNumber: string, userId: number): Pro
     contentType: 'application/json'
   });
 }
+
+export async function updateUser(id: number, updates: Partial<any>): Promise<any | null> {
+  const existing = await getUserById(id);
+  if (!existing) return null;
+
+  const updated = { ...existing, ...updates };
+  const key = getKey('users', id);
+  
+  await put(key, JSON.stringify(updated), {
+    access: 'public',
+    addRandomSuffix: false,
+    contentType: 'application/json'
+  });
+
+  return updated;
+}

@@ -20,6 +20,7 @@ export interface Gift {
   name: string;
   description: string;
   imageUrl: string;
+  averagePrice?: number; // Valor médio em centavos
   isPurchased: boolean;
   purchasedByUserId?: number | null;
   createdAt: string;
@@ -31,6 +32,7 @@ export interface GiftDto {
   name: string;
   description: string;
   imageUrl: string;
+  averagePrice?: number; // Valor médio em centavos
   isPurchased: boolean;
   purchasedByUserId?: number | null;
   purchasedBy?: string | null;
@@ -41,12 +43,14 @@ export interface CreateGiftDto {
   name: string;
   description: string;
   imageUrl: string;
+  averagePrice?: number; // Valor médio em centavos
 }
 
 export interface UpdateGiftDto {
   name?: string;
   description?: string;
   imageUrl?: string;
+  averagePrice?: number; // Valor médio em centavos
 }
 
 export interface RegisterUserDto {
