@@ -3,14 +3,34 @@ import { getAllGifts, createGift } from '@/utils/blob-store';
 import { canManageGifts, getUserForPermission } from '@/utils/permissions';
 import { GiftDto, CreateGiftDto } from '@/types';
 
+// Cache simples em memória (apenas para esta requisição)
+let usersCache: { users: any[], timestamp: number } | null = null;
+const CACHE_TTL = 60 * 1000; // 1 minuto
+
+async function getCachedUsers() {
+  const now = Date.now();
+  if (usersCache && (now - usersCache.timestamp) < CACHE_TTL) {
+    return usersCache.users;
+  }
+  
+  const { getAllUsers } = await import('@/utils/blob-store');
+  const users = await getAllUsers();
+  usersCache = { users, timestamp: now };
+  return users;
+}
+
 export async function GET() {
   try {
     const gifts = await getAllGifts();
     
-    // Buscar usuários para preencher PurchasedBy
-    const { getAllUsers } = await import('@/utils/blob-store');
-    const users = await getAllUsers();
-    const userMap = new Map(users.map(u => [u.id, u]));
+    // Buscar usuários apenas se houver presentes comprados
+    const purchasedGifts = gifts.filter(g => g.purchasedByUserId);
+    let userMap = new Map();
+    
+    if (purchasedGifts.length > 0) {
+      const users = await getCachedUsers();
+      userMap = new Map(users.map(u => [u.id, u]));
+    }
 
     const giftDtos: GiftDto[] = gifts.map(gift => ({
       id: gift.id,
@@ -18,6 +38,7 @@ export async function GET() {
       description: gift.description,
       imageUrl: gift.imageUrl,
       averagePrice: gift.averagePrice || undefined,
+      linkUrl: gift.linkUrl || undefined,
       isPurchased: gift.isPurchased,
       purchasedByUserId: gift.purchasedByUserId || null,
       purchasedBy: gift.purchasedByUserId 
@@ -71,6 +92,7 @@ export async function POST(request: NextRequest) {
       description: body.description || '',
       imageUrl: body.imageUrl,
       averagePrice: body.averagePrice || undefined,
+      linkUrl: body.linkUrl || undefined,
       isPurchased: false,
       purchasedByUserId: null
     });
@@ -81,6 +103,7 @@ export async function POST(request: NextRequest) {
       description: gift.description,
       imageUrl: gift.imageUrl,
       averagePrice: gift.averagePrice || undefined,
+      linkUrl: gift.linkUrl || undefined,
       isPurchased: gift.isPurchased,
       purchasedByUserId: null,
       purchasedBy: null,

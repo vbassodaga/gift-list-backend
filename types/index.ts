@@ -21,6 +21,7 @@ export interface Gift {
   description: string;
   imageUrl: string;
   averagePrice?: number; // Valor médio em centavos
+  linkUrl?: string; // Link para acessar o produto em outro site
   isPurchased: boolean;
   purchasedByUserId?: number | null;
   createdAt: string;
@@ -33,6 +34,7 @@ export interface GiftDto {
   description: string;
   imageUrl: string;
   averagePrice?: number; // Valor médio em centavos
+  linkUrl?: string; // Link para acessar o produto em outro site
   isPurchased: boolean;
   purchasedByUserId?: number | null;
   purchasedBy?: string | null;
@@ -44,6 +46,7 @@ export interface CreateGiftDto {
   description: string;
   imageUrl: string;
   averagePrice?: number; // Valor médio em centavos
+  linkUrl?: string; // Link para acessar o produto em outro site
 }
 
 export interface UpdateGiftDto {
@@ -51,6 +54,7 @@ export interface UpdateGiftDto {
   description?: string;
   imageUrl?: string;
   averagePrice?: number; // Valor médio em centavos
+  linkUrl?: string; // Link para acessar o produto em outro site
 }
 
 export interface RegisterUserDto {
