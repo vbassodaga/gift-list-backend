@@ -35,11 +35,11 @@ export async function GET(
       imageUrl: gift.imageUrl,
       averagePrice: gift.averagePrice || undefined,
       linkUrl: gift.linkUrl || undefined,
+      deliveryAddress: gift.deliveryAddress || undefined,
       isPurchased: gift.isPurchased,
       purchasedByUserId: gift.purchasedByUserId || null,
       purchasedBy,
       paymentMethod: gift.paymentMethod || undefined,
-      deliveryAddress: gift.deliveryAddress || undefined,
       createdAt: gift.createdAt
     };
 
@@ -96,9 +96,11 @@ export async function PUT(
       imageUrl: updated.imageUrl,
       averagePrice: updated.averagePrice || undefined,
       linkUrl: updated.linkUrl || undefined,
+      deliveryAddress: updated.deliveryAddress || undefined,
       isPurchased: updated.isPurchased,
       purchasedByUserId: updated.purchasedByUserId || null,
       purchasedBy: null,
+      paymentMethod: updated.paymentMethod || undefined,
       createdAt: updated.createdAt
     };
 

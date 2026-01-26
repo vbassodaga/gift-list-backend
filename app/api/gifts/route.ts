@@ -39,13 +39,13 @@ export async function GET() {
       imageUrl: gift.imageUrl,
       averagePrice: gift.averagePrice || undefined,
       linkUrl: gift.linkUrl || undefined,
+      deliveryAddress: gift.deliveryAddress || undefined,
       isPurchased: gift.isPurchased,
       purchasedByUserId: gift.purchasedByUserId || null,
       purchasedBy: gift.purchasedByUserId 
         ? `${userMap.get(gift.purchasedByUserId)?.firstName || ''} ${userMap.get(gift.purchasedByUserId)?.lastName || ''}`.trim()
         : null,
       paymentMethod: gift.paymentMethod || undefined,
-      deliveryAddress: gift.deliveryAddress || undefined,
       createdAt: gift.createdAt
     }));
 
@@ -95,6 +95,7 @@ export async function POST(request: NextRequest) {
       imageUrl: body.imageUrl,
       averagePrice: body.averagePrice || undefined,
       linkUrl: body.linkUrl || undefined,
+      deliveryAddress: body.deliveryAddress || undefined,
       isPurchased: false,
       purchasedByUserId: null
     });
@@ -106,6 +107,7 @@ export async function POST(request: NextRequest) {
       imageUrl: gift.imageUrl,
       averagePrice: gift.averagePrice || undefined,
       linkUrl: gift.linkUrl || undefined,
+      deliveryAddress: gift.deliveryAddress || undefined,
       isPurchased: gift.isPurchased,
       purchasedByUserId: null,
       purchasedBy: null,
