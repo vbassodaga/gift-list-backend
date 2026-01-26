@@ -50,7 +50,9 @@ export async function POST(
 
     await updateGift(id, {
       isPurchased: true,
-      purchasedByUserId: body.userId
+      purchasedByUserId: body.userId,
+      paymentMethod: body.paymentMethod,
+      deliveryAddress: body.deliveryAddress
     });
 
     return NextResponse.json({ success: true });

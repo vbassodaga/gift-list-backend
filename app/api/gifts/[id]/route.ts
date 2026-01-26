@@ -38,6 +38,8 @@ export async function GET(
       isPurchased: gift.isPurchased,
       purchasedByUserId: gift.purchasedByUserId || null,
       purchasedBy,
+      paymentMethod: gift.paymentMethod || undefined,
+      deliveryAddress: gift.deliveryAddress || undefined,
       createdAt: gift.createdAt
     };
 

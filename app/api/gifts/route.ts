@@ -44,6 +44,8 @@ export async function GET() {
       purchasedBy: gift.purchasedByUserId 
         ? `${userMap.get(gift.purchasedByUserId)?.firstName || ''} ${userMap.get(gift.purchasedByUserId)?.lastName || ''}`.trim()
         : null,
+      paymentMethod: gift.paymentMethod || undefined,
+      deliveryAddress: gift.deliveryAddress || undefined,
       createdAt: gift.createdAt
     }));
 

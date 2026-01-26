@@ -24,6 +24,8 @@ export interface Gift {
   linkUrl?: string; // Link para acessar o produto em outro site
   isPurchased: boolean;
   purchasedByUserId?: number | null;
+  paymentMethod?: string; // Método de pagamento escolhido
+  deliveryAddress?: string; // Endereço de entrega (se aplicável)
   createdAt: string;
   purchasedByUser?: User | null;
 }
@@ -38,6 +40,8 @@ export interface GiftDto {
   isPurchased: boolean;
   purchasedByUserId?: number | null;
   purchasedBy?: string | null;
+  paymentMethod?: string; // Método de pagamento escolhido
+  deliveryAddress?: string; // Endereço de entrega (se aplicável)
   createdAt: string;
 }
 
@@ -83,4 +87,6 @@ export interface LoginDto {
 
 export interface MarkPurchasedDto {
   userId: number;
+  paymentMethod?: string;
+  deliveryAddress?: string;
 }
