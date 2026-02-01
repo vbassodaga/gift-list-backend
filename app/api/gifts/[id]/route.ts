@@ -40,6 +40,7 @@ export async function GET(
       purchasedByUserId: gift.purchasedByUserId || null,
       purchasedBy,
       paymentMethod: gift.paymentMethod || undefined,
+      isIllustrativeImage: gift.isIllustrativeImage || false,
       createdAt: gift.createdAt
     };
 
@@ -101,6 +102,7 @@ export async function PUT(
       purchasedByUserId: updated.purchasedByUserId || null,
       purchasedBy: null,
       paymentMethod: updated.paymentMethod || undefined,
+      isIllustrativeImage: updated.isIllustrativeImage || false,
       createdAt: updated.createdAt
     };
 

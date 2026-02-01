@@ -26,6 +26,7 @@ export interface Gift {
   purchasedByUserId?: number | null;
   paymentMethod?: string; // Método de pagamento escolhido
   deliveryAddress?: string; // Endereço de entrega (se aplicável)
+  isIllustrativeImage?: boolean; // Indica se a foto é meramente ilustrativa
   createdAt: string;
   purchasedByUser?: User | null;
 }
@@ -42,6 +43,7 @@ export interface GiftDto {
   purchasedByUserId?: number | null;
   purchasedBy?: string | null;
   paymentMethod?: string | null; // Forma de pagamento escolhida
+  isIllustrativeImage?: boolean; // Indica se a foto é meramente ilustrativa
   createdAt: string;
 }
 
@@ -52,6 +54,7 @@ export interface CreateGiftDto {
   averagePrice?: number; // Valor médio em centavos
   linkUrl?: string; // Link para acessar o produto em outro site
   deliveryAddress?: string; // Endereço fixo de entrega (definido pelo admin)
+  isIllustrativeImage?: boolean; // Indica se a foto é meramente ilustrativa
 }
 
 export interface UpdateGiftDto {
@@ -61,6 +64,7 @@ export interface UpdateGiftDto {
   averagePrice?: number; // Valor médio em centavos
   linkUrl?: string; // Link para acessar o produto em outro site
   deliveryAddress?: string; // Endereço fixo de entrega (definido pelo admin)
+  isIllustrativeImage?: boolean; // Indica se a foto é meramente ilustrativa
 }
 
 export interface RegisterUserDto {
